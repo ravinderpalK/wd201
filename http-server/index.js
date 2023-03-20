@@ -1,17 +1,17 @@
 const http = require("http")
 const fs = require("fs")
 
-const args = require("minimist")(process.argv.slice(2))
+// const args = require("minimist")(process.argv.slice(2))
 
 let homeHtml = ""
 let projectHtml = ""
-let registerationHtml = ""
+let registrationHtml = ""
 
 fs.readFile(
-    "registeration.html",
+    "registration.html",
     (err, data) => {
         if (err) throw err
-        registerationHtml += data
+        registrationHtml += data
     }
 )
 
@@ -29,7 +29,7 @@ fs.readFile(
         projectHtml = project
     })
 
-http.createServer(
+const server = http.createServer(
     (req, res) => {
         let url = req.url
         res.writeHeader(200, { "Content-Type" : "text/html" });
@@ -38,8 +38,8 @@ http.createServer(
                 res.write(projectHtml);
                 res.end();
                 break;
-            case "/registeration" :
-                res.write(registerationHtml);
+            case "/registration" :
+                res.write(registrationHtml);
                 res.end();
                 break;
             default :
@@ -48,4 +48,7 @@ http.createServer(
                 break;
         }
     }
-).listen(args._[0]);
+);
+server.listen(2000, (err) => {
+    if(err) console.log("error in server setup");
+});
