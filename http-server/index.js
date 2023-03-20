@@ -1,7 +1,7 @@
 const http = require("http")
 const fs = require("fs")
 
-// const args = require("minimist")(process.argv.slice(2))
+const args = require("minimist")(process.argv.slice(2))
 
 let homeHtml = ""
 let projectHtml = ""
@@ -49,6 +49,6 @@ const server = http.createServer(
         }
     }
 );
-server.listen(2000, (err) => {
+server.listen(args.port, (err) => {
     if(err) console.log("error in server setup");
 });
