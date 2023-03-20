@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <title>Document</title>
+</head>
+<body>
+    <form onsubmit="saveForm()" id="myform" class="flex justify-center">
+        <div class="m-6">
+            <h2 class="block text-3xl">Registeration Form</h2>
+
+            <div class="block mt-6 text-lg">
+                <label for="name">Name</label>
+                <input required type="text" name="name" id="name" class="">
+            </div>
+            
+            <div class="block text-lg mt-2">
+                <label for="email">Email</label>
+                <input required type="email" name="emai" id="email" class="">
+            </div>
+            
+            <div class="text-lg mt-2">
+                <label for="pass">Password</label>
+                <input required type="password" name="password" id="password" class="">
+            </div>
+            
+            <div class="text-lg mt-2">
+                <label for="dob">Date of Birth</label>
+                <input required type="date" name="dob" id="dob" class="" min="1968-03-07" max="2005-03-07">
+            </div>
+            
+            <div class="text-lg mt-2">
+                <input required type="checkbox" name="tac" id="tac">
+                <label for="tac">Accept terms and condition</label>
+            </div>
+            
+            <button type="submit" name="submit" id="submit" class="bg-green-400 p-1 rounded-md text-base mt-2">Submit</button>
+        </div>
+    </form>
+    <div class="flex justify-center mt-2">
+        <div id="table" class="">
+            <h2 class="block text-2xl text-center">Enteries</h2>
+            <div id="user-enteries"></div>
+        </div>
+    </div>
+    <script src="index.js"></script>
+</body>
+</html>
