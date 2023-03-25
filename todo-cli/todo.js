@@ -41,7 +41,7 @@ const todoList = () => {
     const arr = list.map((item) => {
       let x = " ";
       if (item.completed) x = "x";
-      if (item.dueDate.split("-")[2] === 21) {
+      if (item.dueDate.split("-")[2] == 21) {
         return `[${x}] ${item.title}`;
       }
       return `[${x}] ${item.title} ${item.dueDate}`;
