@@ -12,7 +12,7 @@ const todoList = () => {
     // Write the date check condition here and return the array
     // of overdue items accordingly.
     const arr = all.filter((item) => {
-      return item.dueDate.split("-")[2] < 21;
+      return item.dueDate.split("-")[2] < new Date().toISOString().slice(8, 10);
     });
     return arr;
   };
@@ -21,7 +21,9 @@ const todoList = () => {
     // Write the date check condition here and return the array
     // of todo items that are due today accordingly.
     const arr = all.filter((item) => {
-      return item.dueDate.split("-")[2] == 21;
+      return (
+        item.dueDate.split("-")[2] == new Date().toISOString().slice(8, 10)
+      );
     });
     return arr;
   };
@@ -30,7 +32,7 @@ const todoList = () => {
     // Write the date check condition here and return the array
     // of todo items that are due later accordingly.
     const arr = all.filter((item) => {
-      return item.dueDate.split("-")[2] > 21;
+      return item.dueDate.split("-")[2] > new Date().toISOString().slice(8, 10);
     });
     return arr;
   };
@@ -41,7 +43,7 @@ const todoList = () => {
     const arr = list.map((item) => {
       let x = " ";
       if (item.completed) x = "x";
-      if (item.dueDate.split("-")[2] == 21) {
+      if (item.dueDate.split("-")[2] == new Date().toISOString().slice(8, 10)) {
         return `[${x}] ${item.title}`;
       }
       return `[${x}] ${item.title} ${item.dueDate}`;
