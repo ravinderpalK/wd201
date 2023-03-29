@@ -42,17 +42,42 @@ describe("Todo Test Suite", () => {
   });
 
   test("checks retrieval of overdue items.", () => {
-    const item = overdue();
-    expect(item.length).toBe(1);
+    let item = overdue();
+    const overdueItemLength = item.length;
+    add({
+      tittle: "todo item 5",
+      completed: false,
+      dueDate: new Date(new Date().setDate(new Date().getDate() - 1))
+        .toISOString()
+        .slice(0, 10),
+    });
+    item = overdue();
+    expect(item.length).toBe(overdueItemLength + 1);
   });
 
   test("checks retrieval of due today items.", () => {
-    const item = dueToday();
-    expect(item.length).toBe(2);
+    let item = dueToday();
+    const dueTodayItemLength = item.length;
+    add({
+      tittle: "todo item 6",
+      completed: false,
+      dueDate: new Date().toISOString().slice(0, 10),
+    });
+    item = dueToday();
+    expect(item.length).toBe(dueTodayItemLength + 1);
   });
 
   test("checks retrieval of due later items.", () => {
-    const item = dueLater();
-    expect(item.length).toBe(1);
+    let item = dueLater();
+    const dueLaterItemLength = item.length;
+    add({
+      tittle: "todo item 7",
+      completed: false,
+      dueDate: new Date(new Date().setDate(new Date().getDate() + 1))
+        .toISOString()
+        .slice(0, 10),
+    });
+    item = dueLater();
+    expect(item.length).toBe(dueLaterItemLength + 1);
   });
 });
