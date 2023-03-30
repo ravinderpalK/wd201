@@ -9,42 +9,21 @@ const todoList = () => {
   };
 
   const overdue = () => {
-    const arr = all.filter((item) => {
-      const itemDate = item.dueDate.split("-");
-      const todaysDate = new Date().toISOString().slice(0, 10).split("-");
-      return (
-        itemDate[0] < todaysDate[0] ||
-        itemDate[1] < todaysDate[1] ||
-        itemDate[2] < todaysDate[2]
-      );
-    });
-    return arr;
+    return all.filter(
+      (item) => item.dueDate < new Date().toISOString().slice(0, 10)
+    );
   };
 
   const dueToday = () => {
-    const arr = all.filter((item) => {
-      const itemDate = item.dueDate.split("-");
-      const todaysDate = new Date().toISOString().slice(0, 10).split("-");
-      return (
-        itemDate[0] === todaysDate[0] &&
-        itemDate[1] === todaysDate[1] &&
-        itemDate[2] === todaysDate[2]
-      );
-    });
-    return arr;
+    return all.filter(
+      (item) => item.dueDate === new Date().toISOString().slice(0, 10)
+    );
   };
 
   const dueLater = () => {
-    const arr = all.filter((item) => {
-      const itemDate = item.dueDate.split("-");
-      const todaysDate = new Date().toISOString().slice(0, 10).split("-");
-      return (
-        itemDate[0] > todaysDate[0] ||
-        itemDate[1] > todaysDate[1] ||
-        itemDate[2] > todaysDate[2]
-      );
-    });
-    return arr;
+    return all.filter(
+      (item) => item.dueDate > new Date().toISOString().slice(0, 10)
+    );
   };
 
   const toDisplayableList = (list) => {
