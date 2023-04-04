@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Todo extends Model {
     /**
@@ -16,37 +14,35 @@ module.exports = (sequelize, DataTypes) => {
       console.log("My Todo list \n");
 
       console.log("Overdue");
-      (await this.overdue()).map(item => {
+      (await this.overdue()).map((item) => {
         console.log(item.displayableString());
       });
       console.log("\n");
 
       console.log("Due Today");
-      (await this.dueToday()).map(item => {
+      (await this.dueToday()).map((item) => {
         console.log(item.displayableString());
       });
       console.log("\n");
 
       console.log("Due Later");
-      (await this.dueLater()).map(item => {
+      (await this.dueLater()).map((item) => {
         console.log(item.displayableString());
       });
-
     }
 
     static async overdue() {
       let todos = [];
-      const { Op } = require('sequelize');
+      const { Op } = require("sequelize");
       try {
         todos = await Todo.findAll({
           where: {
             dueDate: {
-              [Op.lt]: new Date().toISOString().slice(0, 10)
-            }
-          }
-        })
-      }
-      catch (err) {
+              [Op.lt]: new Date().toISOString().slice(0, 10),
+            },
+          },
+        });
+      } catch (err) {
         console.error(err);
       }
       return todos;
@@ -54,17 +50,16 @@ module.exports = (sequelize, DataTypes) => {
 
     static async dueToday() {
       let todos = [];
-      const { Op } = require('sequelize');
+      const { Op } = require("sequelize");
       try {
         todos = await Todo.findAll({
           where: {
             dueDate: {
-              [Op.eq]: new Date().toISOString().slice(0, 10)
-            }
-          }
-        })
-      }
-      catch (err) {
+              [Op.eq]: new Date().toISOString().slice(0, 10),
+            },
+          },
+        });
+      } catch (err) {
         console.error(err);
       }
       return todos;
@@ -72,17 +67,16 @@ module.exports = (sequelize, DataTypes) => {
 
     static async dueLater() {
       let todos = [];
-      const { Op } = require('sequelize');
+      const { Op } = require("sequelize");
       try {
         todos = await Todo.findAll({
           where: {
             dueDate: {
-              [Op.gt]: new Date().toISOString().slice(0, 10)
-            }
-          }
-        })
-      }
-      catch (err) {
+              [Op.gt]: new Date().toISOString().slice(0, 10),
+            },
+          },
+        });
+      } catch (err) {
         console.error(err);
       }
       return todos;
@@ -90,30 +84,36 @@ module.exports = (sequelize, DataTypes) => {
 
     static async markAsComplete(id) {
       try {
-        await Todo.update({ completed: true }, {
-          where: {
-            id: id
+        await Todo.update(
+          { completed: true },
+          {
+            where: {
+              id: id,
+            },
           }
-        });
-      }
-      catch (err) {
+        );
+      } catch (err) {
         console.error(err);
       }
     }
 
     displayableString() {
       let checkbox = this.completed ? "[x]" : "[ ]";
+      if (this.dueDate === new Date().toISOString().slice(0, 10))
+        return `${this.id}. ${checkbox} ${this.title}`;
       return `${this.id}. ${checkbox} ${this.title} ${this.dueDate}`;
     }
-
   }
-  Todo.init({
-    title: DataTypes.STRING,
-    dueDate: DataTypes.DATEONLY,
-    completed: DataTypes.BOOLEAN
-  }, {
-    sequelize,
-    modelName: 'Todo',
-  });
+  Todo.init(
+    {
+      title: DataTypes.STRING,
+      dueDate: DataTypes.DATEONLY,
+      completed: DataTypes.BOOLEAN,
+    },
+    {
+      sequelize,
+      modelName: "Todo",
+    }
+  );
   return Todo;
 };
