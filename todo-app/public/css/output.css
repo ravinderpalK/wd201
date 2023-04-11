@@ -549,10 +549,6 @@ video {
   display: flex;
 }
 
-.table {
-  display: table;
-}
-
 .grid {
   display: grid;
 }
@@ -679,14 +675,6 @@ video {
 
 .leading-4 {
   line-height: 1rem;
-}
-
-.leading-3 {
-  line-height: .75rem;
-}
-
-.leading-none {
-  line-height: 1;
 }
 
 .text-blue-600 {
