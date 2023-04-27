@@ -1,17 +1,19 @@
 <div>
   <div>
-    <h5 class="inline">Overdue</h5>
+    <h5 class="inline">
+      <%= title %>
+    </h5>
     <div id="count-overdue" class="inline">
-      <%= overdueTodos.length %>
+      <%= data.length %>
     </div>
-    <% for (var i=0; i < overdueTodos.length; i++ ) {%>
+    <% for (var i=0; i < data.length; i++ ) {%>
       <ul class="list-none">
         <li class="todo-item">
           <div class="flex w-fit my-2 px-2 py-1 rounded hover:bg-purple-50 ">
-            <input id="<%= `todo-checkbox-${overdueTodos[i].id}`%>" type="checkbox"
+            <input id="<%= `todo-checkbox-${data.id}`%>" type="checkbox"
               class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300">
-            <label for="<%=`todo-checkbox-${overdueTodos[i].id}`%>" class=" ml-2 text-sm text-gray-600 cursor-pointer">
-              <%= overdueTodos[i].title %>
+            <label for="<%=`todo-checkbox-${data.id}`%>" class=" ml-2 text-sm text-gray-600 cursor-pointer">
+              <%= data[i].title %>
             </label>
             <a href="#" class="hidden ml-2 trash-icon">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -26,7 +28,7 @@
       </ul>
       <% } %>
   </div>
-  <div>
+  <!-- <div>
     <h5 class="inline">Due Today</h5>
     <div id="count-due-today" class="inline">
       <%= dueTodayTodos.length %>
@@ -79,5 +81,5 @@
         <li></li>
       </ul>
       <% } %>
-  </div>
+  </div> -->
 </div>
