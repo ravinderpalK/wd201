@@ -17,6 +17,14 @@ module.exports = (sequelize, DataTypes) => {
       return this.update({ completed: true });
     }
 
+    static async remove(id) {
+      return this.destroy({
+        where: {
+          id,
+        },
+      });
+    }
+
     static getTodos() {
       return this.findAll();
     }
