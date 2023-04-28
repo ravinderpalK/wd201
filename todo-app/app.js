@@ -3,8 +3,12 @@ const app = express();
 const { Todo } = require("./models");
 const bodyParser = require("body-parser");
 const path = require("path");
+var csrf = require("csurf");
+var cookieParser = require("cookie-parser");
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser("shh! some secret string"));
+app.use(csrf({ cookie: true }));
 
 app.set("view engine", "ejs");
 
@@ -21,6 +25,7 @@ app.get("/", async (request, response) => {
       overdueTodos,
       dueTodayTodos,
       dueLaterTodos,
+      csrfToken: request.csrfToken(),
     });
   } else {
     response.json({
