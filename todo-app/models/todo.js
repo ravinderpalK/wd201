@@ -10,11 +10,15 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
-    static addTodo({ title, dueDate }) {
-      return this.create({ title: title, dueDate: dueDate, completed: false });
+    static addTodo({ title, dueDate, completed }) {
+      return this.create({
+        title: title,
+        dueDate: dueDate,
+        completed: completed,
+      });
     }
-    markAsCompleted() {
-      return this.update({ completed: true });
+    setCompletionStatus(status) {
+      return this.update({ completed: !status });
     }
 
     static async remove(id) {
@@ -29,6 +33,14 @@ module.exports = (sequelize, DataTypes) => {
       return this.findAll();
     }
 
+    static getCompletedTodos() {
+      return this.findAll({
+        where: {
+          completed: true,
+        },
+      });
+    }
+
     static getOverdueTodos() {
       const { Op } = require("sequelize");
       return this.findAll({
@@ -36,6 +48,7 @@ module.exports = (sequelize, DataTypes) => {
           dueDate: {
             [Op.lt]: new Date().toISOString().slice(0, 10),
           },
+          completed: false,
         },
       });
     }
@@ -46,6 +59,7 @@ module.exports = (sequelize, DataTypes) => {
           dueDate: {
             [Op.eq]: new Date().toISOString().slice(0, 10),
           },
+          completed: false,
         },
       });
     }
@@ -56,6 +70,7 @@ module.exports = (sequelize, DataTypes) => {
           dueDate: {
             [Op.gt]: new Date().toISOString().slice(0, 10),
           },
+          completed: false,
         },
       });
     }

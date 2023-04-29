@@ -13,7 +13,7 @@
       .querySelector(`meta[name="csrf-token"]`)
       .getAttribute("content");
     function updateTodo(id) {
-      fetch(`/todos/${id}/markAsCompleted`, {
+      fetch(`/todos/${id}`, {
         method: "put",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -70,6 +70,7 @@
         <%- include('todos.ejs', {title: "Overdue" , data: overdueTodos}) %>
           <%- include('todos.ejs', {title: "Due Today" , data: dueTodayTodos}) %>
             <%- include('todos.ejs', {title: "Due Later" , data: dueLaterTodos}) %>
+              <%- include('todos.ejs', {title: "Completed Items" , data: completedTodos}) %>
     </div>
   </div>
 
