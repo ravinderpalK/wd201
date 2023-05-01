@@ -7,17 +7,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="csrf-token" content="<%= csrfToken %>">
   <link rel="stylesheet" href="./css/output.css">
-  <title>Mty Todo Application</title>
+  <title>My Todo Application</title>
   <script>
     var token = document
       .querySelector(`meta[name="csrf-token"]`)
       .getAttribute("content");
-    function updateTodo(id) {
+    function updateTodo(id, completed) {
       fetch(`/todos/${id}`, {
         method: "put",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          "_csrf": token
+          "_csrf": token,
+          completed: completed,
         })
       })
         .then((res) => {

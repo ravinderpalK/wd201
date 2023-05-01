@@ -9,8 +9,8 @@
     <ul class="list-none">
       <li class="todo-item">
         <div class="flex w-fit my-2 px-2 py-1 rounded hover:bg-purple-50 ">
-          <input id="todo-checkbox-<%= data[i].id %>" onclick="updateTodo(<%= data[i].id %>)" <%=data[i].completed
-            ? "checked" : "" %> type="checkbox"
+          <input id="todo-checkbox-<%= data[i].id %>" onclick="updateTodo(<%= data[i].id %>, <%= data[i].completed %>)"
+            <%=data[i].completed ? "checked" : "" %> type="checkbox"
           class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300">
           <label for="todo-checkbox-<%= data[i].id %>" class=" ml-2 text-sm text-gray-600 cursor-pointer">
             <%= data[i].title %>

@@ -60,6 +60,7 @@ describe("Todo Application", function () {
       .put(`/todos/${latestTodo.id}`)
       .send({
         _csrf: csrfToken,
+        completed: latestTodo.completed,
       });
     const parsedUpdatedResponse = JSON.parse(completionStatusResponse.text);
     expect(parsedUpdatedResponse.completed).toBe(true);
@@ -90,6 +91,7 @@ describe("Todo Application", function () {
       .put(`/todos/${latestTodo.id}`)
       .send({
         _csrf: csrfToken,
+        completed: latestTodo.completed,
       });
     const parsedUpdatedResponse = JSON.parse(completionStatusResponse.text);
     expect(parsedUpdatedResponse.completed).toBe(false);
