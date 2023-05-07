@@ -8,23 +8,27 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Todo.belongsTo(models.User, {
+        foreignKey: "userId",
+      });
     }
-    static addTodo({ title, dueDate, completed }) {
+    static addTodo({ title, dueDate, completed, userId }) {
       return this.create({
         title: title,
         dueDate: dueDate,
         completed: completed,
+        userId,
       });
     }
     setCompletionStatus(status) {
       return this.update({ completed: !status });
     }
 
-    static async remove(id) {
+    static async remove(id, userId) {
       return this.destroy({
         where: {
           id,
+          userId,
         },
       });
     }
@@ -33,43 +37,47 @@ module.exports = (sequelize, DataTypes) => {
       return this.findAll();
     }
 
-    static getCompletedTodos() {
+    static getCompletedTodos(userId) {
       return this.findAll({
         where: {
           completed: true,
+          userId,
         },
       });
     }
 
-    static getOverdueTodos() {
+    static getOverdueTodos(userId) {
       const { Op } = require("sequelize");
       return this.findAll({
         where: {
           dueDate: {
             [Op.lt]: new Date().toISOString().slice(0, 10),
           },
+          userId,
           completed: false,
         },
       });
     }
-    static getDueTodayTodos() {
+    static getDueTodayTodos(userId) {
       const { Op } = require("sequelize");
       return this.findAll({
         where: {
           dueDate: {
             [Op.eq]: new Date().toISOString().slice(0, 10),
           },
+          userId,
           completed: false,
         },
       });
     }
-    static getDueLaterTodos() {
+    static getDueLaterTodos(userId) {
       const { Op } = require("sequelize");
       return this.findAll({
         where: {
           dueDate: {
             [Op.gt]: new Date().toISOString().slice(0, 10),
           },
+          userId,
           completed: false,
         },
       });
