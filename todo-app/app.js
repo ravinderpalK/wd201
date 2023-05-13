@@ -144,7 +144,6 @@ app.post("/users", async (request, response) => {
   } catch (err) {
     if (err.name == "SequelizeValidationError") {
       if (!firstName) request.flash("firstName", "First Name cannot be empty");
-      if (!lastName) request.flash("lastName", "Last Name cannot be empty");
       if (!email) request.flash("email", "Email cannot be empty");
       if (!password) request.flash("password", "Password cannot be empty");
       response.redirect("/signup");
