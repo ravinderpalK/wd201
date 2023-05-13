@@ -58,12 +58,22 @@
           <input type="hidden" name="_csrf" value="<%= csrfToken %>">
           <div class="flex gap-2 py-4">
             <div class="flex-auto">
-              <input required type="text" placeholder="what's next?" name="title" id="todo"
+              <input type="text" placeholder="what's next?" name="title" id="todo"
                 class="border border-gray-300 text-gray-900 w-full rounded p-2 text-sm">
+              <span class="text-sm text-red-700">
+                <% if(messages.title ) {%>
+                  <%= messages.title %>
+                    <% } %>
+              </span>
             </div>
             <div class="flex-auto">
-              <input required type="date" name="dueDate" id="date"
+              <input type="date" name="dueDate" id="date"
                 class="border border-gray-300 text-gray-900 w-full p-2 text-sm leading-4">
+              <span class="text-sm text-red-700">
+                <% if(messages.dueDate ) {%>
+                  <%= messages.dueDate %>
+                    <% } %>
+              </span>
             </div>
             <div class="flex-none">
               <button type="submit"

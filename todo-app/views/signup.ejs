@@ -22,18 +22,38 @@
           <div class="py-3">
             <label for="firstName">First Name:</label>
             <input type="text" name="firstName" class="border border-gray-300 text-gray-900 rounded p-2 w-full">
+            <span class="text-sm text-red-700">
+              <% if(messages.firstName ) {%>
+                <%= messages.firstName %>
+                  <% } %>
+            </span>
           </div>
           <div class="py-3">
             <label for="lastName">Last Name:</label>
             <input type="text" name="lastName" class="border border-gray-300 text-gray-900 rounded p-2 w-full">
+            <span class="text-sm text-red-700">
+              <% if(messages.lastName ) {%>
+                <%= messages.lastName %>
+                  <% } %>
+            </span>
           </div>
           <div class="py-3">
             <label for="email">Email:</label>
             <input type="email" name="email" class="border border-gray-300 text-gray-900 rounded p-2 w-full">
+            <span class="text-sm text-red-700">
+              <% if(messages.email ) {%>
+                <%= messages.email %>
+                  <% } %>
+            </span>
           </div>
           <div class="py-3">
             <label for="password">Password:</label>
             <input type="password" name="password" class="border border-gray-300 text-gray-900 rounded p-2 w-full">
+            <span class="text-sm text-red-700">
+              <% if(messages.password ) {%>
+                <%= messages.password %>
+                  <% } %>
+            </span>
           </div>
           <div class="py-3">
             <button type="submit" class="text-white bg-green-600 hover:bg-green-800 font-medium rounded px-5 py-2">Sign

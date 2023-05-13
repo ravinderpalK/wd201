@@ -13,6 +13,8 @@ const LocalStratergy = require("passport-local");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
+const flash = require("connect-flash");
+
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser("shh! some secret string"));
@@ -31,6 +33,13 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.set("views", path.join(__dirname, "views"));
+app.use(flash());
+app.use(function (request, response, next) {
+  response.locals.messages = request.flash();
+  next();
+});
+
 passport.use(
   new LocalStratergy(
     {
@@ -39,13 +48,17 @@ passport.use(
     },
     (username, password, done) => {
       User.findOne({ where: { email: username } })
-        .then(async (user) => {
+        .then(async function (user) {
           const result = await bcrypt.compare(password, user.password);
-          if (result) return done(null, user);
-          else return done("Invalid Password");
+          if (result) {
+            return done(null, user);
+          } else {
+            return done(null, false, { message: "Invalid password" });
+          }
         })
-        .catch((err) => {
-          return err;
+        .catch((error) => {
+          console.log(error);
+          return done(null, false, { message: "Invalid email" });
         });
     }
   )
@@ -111,11 +124,15 @@ app.get("/signup", (request, response) => {
 
 app.post("/users", async (request, response) => {
   const hashedPwd = await bcrypt.hash(request.body.password, saltRounds);
+  const firstName = request.body.firstName;
+  const lastName = request.body.lastName;
+  const email = request.body.email;
+  const password = request.body.password;
   try {
     const user = await User.create({
-      firstName: request.body.firstName,
-      lastName: request.body.lastName,
-      email: request.body.email,
+      firstName,
+      lastName,
+      email,
       password: hashedPwd,
     });
     request.login(user, (err) => {
@@ -125,7 +142,13 @@ app.post("/users", async (request, response) => {
       response.redirect("/todos");
     });
   } catch (err) {
-    console.error(err);
+    if (err.name == "SequelizeValidationError") {
+      if (!firstName) request.flash("firstName", "First Name cannot be empty");
+      if (!lastName) request.flash("lastName", "Last Name cannot be empty");
+      if (!email) request.flash("email", "Email cannot be empty");
+      if (!password) request.flash("password", "Password cannot be empty");
+      response.redirect("/signup");
+    } else console.log(err);
   }
 });
 
@@ -135,8 +158,12 @@ app.get("/login", (request, response) => {
 
 app.post(
   "/session",
-  passport.authenticate("local", { failureRedirect: "/login" }),
-  (request, response) => {
+  passport.authenticate("local", {
+    failureRedirect: "/login",
+    failureFlash: true,
+  }),
+  function (request, response) {
+    console.log(request.user);
     response.redirect("/todos");
   }
 );
@@ -148,42 +175,26 @@ app.get("/signout", (request, response, next) => {
   });
 });
 
-app.get("/todos", async function (_request, response) {
-  console.log("Processing list of all Todos ...");
-  try {
-    const todos = await Todo.findAll();
-    response.send(todos);
-  } catch (error) {
-    console.error(error);
-    return response.status(422).json(error);
-  }
-});
-
-app.get("/todos/:id", async function (request, response) {
-  try {
-    const todo = await Todo.findByPk(request.params.id);
-    return response.json(todo);
-  } catch (error) {
-    console.log(error);
-    return response.status(422).json(error);
-  }
-});
-
 app.post(
   "/todos",
   connectEnsureLogin.ensureLoggedIn(),
   async function (request, response) {
+    const title = request.body.title;
+    const dueDate = request.body.dueDate;
     try {
       await Todo.addTodo({
-        title: request.body.title,
-        dueDate: request.body.dueDate,
+        title,
+        dueDate,
         completed: false,
         userId: request.user.id,
       });
       return response.redirect("/todos");
-    } catch (error) {
-      console.log(error);
-      return response.status(422).json(error);
+    } catch (err) {
+      if (err.name == "SequelizeValidationError") {
+        if (!title) request.flash("title", "Title cannot be empty");
+        if (!dueDate) request.flash("dueDate", "Date cannot be empty");
+        response.redirect("/todos");
+      } else return response.status(422).json(err);
     }
   }
 );
