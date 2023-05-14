@@ -80,6 +80,9 @@ passport.deserializeUser((id, done) => {
 });
 
 app.get("/", async (request, response) => {
+  if (request.isAuthenticated()) {
+    return response.redirect("/todos");
+  }
   response.render("index", {
     title: "Todo application",
     csrfToken: request.csrfToken(),
@@ -103,6 +106,7 @@ app.get(
         dueLaterTodos,
         completedTodos,
         csrfToken: request.csrfToken(),
+        user: request.user.firstName,
       });
     } else {
       response.json({
@@ -147,7 +151,10 @@ app.post("/users", async (request, response) => {
       if (!email) request.flash("email", "Email cannot be empty");
       if (!password) request.flash("password", "Password cannot be empty");
       response.redirect("/signup");
-    } else console.log(err);
+    } else if (err.name == "SequelizeUniqueConstraintError") {
+      request.flash("email", "email is already used");
+      response.redirect("/signup");
+    }
   }
 });
 
@@ -184,7 +191,6 @@ app.post(
       await Todo.addTodo({
         title,
         dueDate,
-        completed: false,
         userId: request.user.id,
       });
       return response.redirect("/todos");
@@ -202,8 +208,10 @@ app.put(
   "/todos/:id",
   connectEnsureLogin.ensureLoggedIn(),
   async function (request, response) {
-    const todo = await Todo.findByPk(request.params.id);
     try {
+      const todo = await Todo.findOne({
+        where: { userId: request.user.id, id: request.params.id },
+      });
       const updatedTodo = await todo.setCompletionStatus(
         request.body.completed
       );
@@ -220,8 +228,9 @@ app.delete(
   connectEnsureLogin.ensureLoggedIn(),
   async function (request, response) {
     try {
-      await Todo.remove(request.params.id, request.user.id);
-      return response.json({ success: true });
+      const res = await Todo.remove(request.params.id, request.user.id);
+      if (res) return response.json({ success: true });
+      else return response.json({ success: false });
     } catch (error) {
       return response.status(422).json(error);
     }

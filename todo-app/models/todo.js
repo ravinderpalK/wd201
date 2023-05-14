@@ -12,11 +12,11 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "userId",
       });
     }
-    static addTodo({ title, dueDate, completed, userId }) {
+    static addTodo({ title, dueDate, userId }) {
       return this.create({
         title: title,
         dueDate: dueDate,
-        completed: completed,
+        completed: false,
         userId,
       });
     }
