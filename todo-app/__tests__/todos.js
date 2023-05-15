@@ -81,6 +81,21 @@ describe("Todo Application", function () {
     expect(response.statusCode).toBe(302);
   });
 
+  test("Creates a todo  with future date", async () => {
+    const agent = request.agent(server);
+    await login(agent, "userA.a@gmail.com", "12345678");
+    const res = await agent.get("/todos");
+    const csrfToken = extractCsrfToken(res);
+    const response = await agent.post("/todos").send({
+      title: "Buy milk",
+      dueDate: new Date(
+        new Date().setDate(new Date().getDate() + 1)
+      ).toISOString(),
+      _csrf: csrfToken,
+    });
+    expect(response.statusCode).toBe(302);
+  });
+
   test("marking an item as complete and then incomplete ", async () => {
     const agent = request.agent(server);
     await login(agent, "userA.a@gmail.com", "12345678");
