@@ -127,7 +127,9 @@ app.get("/signup", (request, response) => {
 });
 
 app.post("/users", async (request, response) => {
-  const hashedPwd = await bcrypt.hash(request.body.password, saltRounds);
+  let hashedPwd = "";
+  if (request.body.password)
+    hashedPwd = await bcrypt.hash(request.body.password, saltRounds);
   const firstName = request.body.firstName;
   const lastName = request.body.lastName;
   const email = request.body.email;

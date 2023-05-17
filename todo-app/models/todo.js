@@ -90,7 +90,6 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notNull: true,
-          len: 5,
         },
       },
       dueDate: {
