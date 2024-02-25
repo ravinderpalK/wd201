@@ -50,7 +50,7 @@ jobs:
       - name: Run the app
         id: run-app
         run: |
-          npx sequelize-cli db:drop
+          cd todo-app && npx sequelize-cli db:drop
           npx sequelize-cli db:create
           npx sequelize-cli db:migrate
           PORT=3000 npm start &
