@@ -26,7 +26,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: cd ./todo-app
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
+    - run: cd ./todo-app && npm ci
+    - run: cd ./todo-app && npm run build --if-present
+    - run: cd ./todo-app && npm test
