@@ -64,48 +64,48 @@ jobs:
   # Job to deploy the app to production
   # deploy:
     # Define the job dependencies
-    needs: run-tests
-    runs-on: ubuntu-latest
-    if: needs.run-tests.result == 'success'
+    # needs: run-tests
+    # runs-on: ubuntu-latest
+    # if: needs.run-tests.result == 'success'
 
     # Steps to execute within the job
-    steps:
+    # steps:
       # Deploy to production using a custom action
-      - name: Deploy to production
-        uses: johnbeynon/render-deploy-action@v0.0.8
-        with:
-          service-id: "${{ secrets.MY_RENDER_SERVICE_ID }}"
-          api-key: "${{ secrets.MY_RENDER_API_KEY }}"
+      # - name: Deploy to production
+        # uses: johnbeynon/render-deploy-action@v0.0.8
+        # with:
+          # service-id: "${{ secrets.MY_RENDER_SERVICE_ID }}"
+          # api-key: "${{ secrets.MY_RENDER_API_KEY }}"
 
   # Job to send Slack notifications
   # notify:
     # Define the job dependencies
-    needs: [run-tests, deploy]
-    runs-on: ubuntu-latest
+    # needs: [run-tests, deploy]
+    # runs-on: ubuntu-latest
 
-    if: ${{ always() }}
-    steps:
-      - name: Send Slack notification on success
+    # if: ${{ always() }}
+    # steps:
+    #   - name: Send Slack notification on success
 
         # Send a Slack notification if the tests and deployment are successful
-        if: ${{ needs.run-tests.result == 'success' && needs.deploy.result == 'success' }}
-        uses: slackapi/slack-github-action@v1.25.0
-        with:
-          payload: |
-            {
-              "text": "CI/CD process succeeded!" 
-            }
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      #   if: ${{ needs.run-tests.result == 'success' && needs.deploy.result == 'success' }}
+      #   uses: slackapi/slack-github-action@v1.25.0
+      #   with:
+      #     payload: |
+      #       {
+      #         "text": "CI/CD process succeeded!" 
+      #       }
+      #   env:
+      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
-      - name: Send Slack notification on failure
-        if: ${{ needs.run-tests.result != 'success' || needs.deploy.result != 'success' }}
-        uses: slackapi/slack-github-action@v1.25.0
-        with:
-          payload: |
-            {
-              "text": "*${{ github.workflow }}* failed. Access the details https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}."
+      # - name: Send Slack notification on failure
+      #   if: ${{ needs.run-tests.result != 'success' || needs.deploy.result != 'success' }}
+      #   uses: slackapi/slack-github-action@v1.25.0
+      #   with:
+      #     payload: |
+      #       {
+      #         "text": "*${{ github.workflow }}* failed. Access the details https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}."
                
-            }
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      #       }
+      #   env:
+      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
