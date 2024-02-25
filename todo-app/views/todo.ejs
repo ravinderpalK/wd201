@@ -1,7 +1,7 @@
 <div>
   <h5>
     <%= title %>
-      <span id="count-overdue"
+      <span id=<%= title=="Overdue" ? "count-overdue" : title=="Due Today" ? "count-duetoday" : "count-duelater"%>
         class="bg-gray-100 text-gray-800 text-sm font-small mr-2 px-2.5 py-0.5 dark:bg-gray-200 dark:text-gray-900 rounded justify-center items-center items ">
         <%= data.length %>
       </span>
