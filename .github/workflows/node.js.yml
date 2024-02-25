@@ -56,10 +56,10 @@ jobs:
           PORT=3000 npm start &
           sleep 5
       # Run integration tests
-      # - name: Run integration tests
-        # run: |
-          # npm install cypress cypress-json-results
-          # npx cypress run
+      - name: Run integration tests
+        run: |
+          cd todo-app && npm install cypress cypress-json-results
+          npx cypress run
 
   # Job to deploy the app to production
   # deploy:
