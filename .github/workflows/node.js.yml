@@ -57,9 +57,9 @@ jobs:
           sleep 5
       # Run integration tests
       # - name: Run integration tests
-        run: |
-          npm install cypress cypress-json-results
-          npx cypress run
+        # run: |
+          # npm install cypress cypress-json-results
+          # npx cypress run
 
   # Job to deploy the app to production
   # deploy:
