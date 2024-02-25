@@ -19,10 +19,8 @@ jobs:
         node-version: '14'  # Change to your desired Node.js version
 
     - name: Install dependencies
-    - run: cd ./todo-app && npm ci
-
-    - run: cd ./todo-app && npm run build --if-present
+      run: cd ./todo-app && npm ci
 
     - name: Run Tests
-    - run: cd ./todo-app && npm test
+      run: cd ./todo-app && npm test      
 
