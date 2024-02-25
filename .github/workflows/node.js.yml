@@ -42,10 +42,10 @@ jobs:
 
         # Install dependencies
       - name: Install dependencies
-        run: todo-app && npm ci
+        run: cd todo-app && npm ci
       # Run unit tests
       - name: Run unit tests
-        run: todo-app && npm test
+        run: cd todo-app && npm test
       # Run the app
       - name: Run the app
         id: run-app
