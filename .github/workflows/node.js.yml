@@ -62,20 +62,20 @@ jobs:
           npx cypress run
 
   # Job to deploy the app to production
-  # deploy:
+  deploy:
     # Define the job dependencies
-    # needs: run-tests
-    # runs-on: ubuntu-latest
-    # if: needs.run-tests.result == 'success'
+    needs: run-tests
+    runs-on: ubuntu-latest
+    if: needs.run-tests.result == 'success'
 
     # Steps to execute within the job
-    # steps:
+    steps:
       # Deploy to production using a custom action
-      # - name: Deploy to production
-        # uses: johnbeynon/render-deploy-action@v0.0.8
-        # with:
-          # service-id: "${{ secrets.MY_RENDER_SERVICE_ID }}"
-          # api-key: "${{ secrets.MY_RENDER_API_KEY }}"
+      - name: Deploy to production
+        uses: johnbeynon/render-deploy-action@v0.0.8
+        with:
+          service-id: "${{ secrets.MY_RENDER_SERVICE_ID }}"
+          api-key: "${{ secrets.MY_RENDER_API_KEY }}"
 
   # Job to send Slack notifications
   # notify:
