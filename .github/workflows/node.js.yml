@@ -97,7 +97,7 @@ jobs:
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-
+    
       - name: Send Slack notification on failure
         if: ${{ needs.run-tests.result != 'success' || needs.deploy.result != 'success' }}
         uses: slackapi/slack-github-action@v1.25.0
