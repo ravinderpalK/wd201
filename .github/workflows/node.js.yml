@@ -1,5 +1,5 @@
 name: CI/CD
-# Triggers the workflow on every push event
+# Triggers the workflow on every push events
 on: push
 
 # Environment variables
