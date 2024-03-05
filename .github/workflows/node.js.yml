@@ -72,11 +72,11 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      # - name: Build and push
-      #   uses: docker/build-push-action@v5
-      #   with:
-      #     push: true
-      #     tags: user/app:latest
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          push: true
+          tags: raviinderpalsingh/todo-app-prod:latest
 
   # Job to deploy the app to production
   deploy:
