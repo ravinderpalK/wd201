@@ -72,13 +72,10 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build and push
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: cd todo-app && ./Dockerfile
-          push: true
-          tags: raviinderpalsingh/todo-app-prod:latest
+      - name: Push Docker image to Docker Hub
+        run: |
+        docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+        docker push raviinderpalsingh/todo-app-prod:latest
 
   # Job to deploy the app to production
   deploy:
