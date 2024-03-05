@@ -75,8 +75,8 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
+          context: ./todo-app
           push: true
-          dockerfile: cd todo-app && Dockerfile
           tags: raviinderpalsingh/todo-app-prod:latest
 
   # Job to deploy the app to production
