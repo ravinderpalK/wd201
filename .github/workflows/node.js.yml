@@ -63,6 +63,8 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx
@@ -74,10 +76,10 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Build Docker image
         run: |
-          docker build -t raviinderpalsingh/todo-app-prod:latest .
+          cd todo-app && docker build -t raviinderpalsingh/todo-app-prod:latest .
       - name: Push Docker image to Docker Hub
         run: |
-          docker push raviinderpalsingh/todo-app-prod:latest
+          cd todo-app && docker push raviinderpalsingh/todo-app-prod:latest
 
   # Job to deploy the app to production
   deploy:
