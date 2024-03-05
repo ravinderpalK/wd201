@@ -12,7 +12,6 @@ env:
 # Jobs
 jobs:
   # Job to run tests
-
   run-tests:
     # Runs on Ubuntu latest version
     runs-on: ubuntu-latest
