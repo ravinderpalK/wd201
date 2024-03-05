@@ -58,7 +58,6 @@ jobs:
           cd todo-app && npm install cypress cypress-json-results
           npx cypress run
 
-
   docker:
     runs-on: ubuntu-latest
     steps:
