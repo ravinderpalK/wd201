@@ -77,8 +77,7 @@ jobs:
           docker build -t raviinderpalsingh/todo-app-prod:latest .
       - name: Push Docker image to Docker Hub
         run: |
-        docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
-        docker push raviinderpalsingh/todo-app-prod:latest
+        docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }} && docker push raviinderpalsingh/todo-app-prod:latest
 
   # Job to deploy the app to production
   deploy:
