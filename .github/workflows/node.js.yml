@@ -3,7 +3,6 @@ name: CI/CD
 on: push
 
 # Environment variables
-
 env:
   PG_DATABASE: "${{ secrets.POSTGRES_DATABASE }}"
   PG_USER: "${{ secrets.POSTGRES_USER }}"
