@@ -94,7 +94,6 @@ jobs:
         with:
           service-id: "${{ secrets.MY_RENDER_SERVICE_ID }}"
           api-key: "${{ secrets.MY_RENDER_API_KEY }}"
-
   # Job to send Slack notifications
   notify:
     # Define the job dependencies
