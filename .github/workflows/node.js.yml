@@ -74,7 +74,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Build Docker image
         run: |
-          cd todo-app && docker build -t raviinderpalsingh/todo-app-prod:latest .
+          cd todo-app && docker build -f Dockerfile --target production -t raviinderpalsingh/todo-app-prod:latest .
       - name: Push Docker image to Docker Hub
         run: |
           cd todo-app && docker push raviinderpalsingh/todo-app-prod:latest
