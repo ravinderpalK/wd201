@@ -59,6 +59,7 @@ jobs:
           npx cypress run
 
   docker:
+    needs: run-tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -82,7 +83,7 @@ jobs:
   # Job to deploy the app to production
   deploy:
     # Define the job dependencies
-    needs: run-tests
+    needs: [run-tests,docker]
     runs-on: ubuntu-latest
     if: needs.run-tests.result == 'success'
 
