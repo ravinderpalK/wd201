@@ -100,7 +100,6 @@ jobs:
     # Define the job dependencies
     needs: [run-tests, deploy]
     runs-on: ubuntu-latest
-
     if: ${{ always() }}
     steps:
       - name: Send Slack notification on success
