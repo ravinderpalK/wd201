@@ -6,14 +6,12 @@ EXPOSE 3000
 FROM base as production
 ENV NODE_ENV=production
 RUN npm i -g husky
-RUN npm install pm2 -g
 RUN npm install
 COPY . /app
 CMD node index.js
 
 FROM base as dev
 ENV NODE_ENV=devlopment
-RUN npm install pm2 -g
 RUN npm install -g nodemon && npm install
 COPY . /app
 CMD npm run start
