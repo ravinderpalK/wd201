@@ -103,7 +103,6 @@ jobs:
     if: ${{ always() }}
     steps:
       - name: Send Slack notification on success
-
         # Send a Slack notification if the tests and deployment are successful
         if: ${{ needs.run-tests.result == 'success' && needs.deploy.result == 'success' }}
         uses: slackapi/slack-github-action@v1.25.0
